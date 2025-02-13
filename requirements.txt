@@ -1,0 +1,5 @@
+streamlit
+docxtpl
+pandas
+Python-IO
+datetime
