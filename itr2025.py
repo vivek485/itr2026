@@ -6,7 +6,7 @@ import io
 import datetime
 
 st.set_page_config(layout="wide")
-st.title('ITR NEW TAX REGIME CALCULATION 2025-26')
+st.title('ITR NEW TAX REGIME CALCULATION 2026-27')
 
 # Tax slab constants for new regime FY 2025-26
 TAX_SLABS = {
