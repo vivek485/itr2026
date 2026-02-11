@@ -37,7 +37,7 @@ tax_paid = st.number_input('TAX PAID', value=0)
 income = gross_salary + other_salary
 totalincome = income - st_deduction
 
-def calc_tax_new_regime(income):
+def calc_tax_new_regime(totalincome):
     """Calculate tax under new regime for FY 2025-26 with slab-wise breakdown"""
     tax = 0
     slab_tax = {
@@ -52,32 +52,32 @@ def calc_tax_new_regime(income):
     }
     
     # 5% slab (4L-8L)
-    taxable_amount = min(400000, max(0, income - 400000))
+    taxable_amount = min(400000, max(0, totalincome - 400000))
     slab_tax['slab2_tax'] = round(taxable_amount * 0.05)
     tax += slab_tax['slab2_tax']
     
     # 10% slab (8L-12L)
-    taxable_amount = min(400000, max(0, income - 800000))
+    taxable_amount = min(400000, max(0, totalincome - 800000))
     slab_tax['slab3_tax'] = round(taxable_amount * 0.10)
     tax += slab_tax['slab3_tax']
     
     # 15% slab (12L-16L)
-    taxable_amount = min(400000, max(0, income - 1200000))
+    taxable_amount = min(400000, max(0, totalincome - 1200000))
     slab_tax['slab4_tax'] = round(taxable_amount * 0.15)
     tax += slab_tax['slab4_tax']
     
     # 20% slab (16L-20L)
-    taxable_amount = min(400000, max(0, income - 1600000))
+    taxable_amount = min(400000, max(0, totalincome - 1600000))
     slab_tax['slab5_tax'] = round(taxable_amount * 0.20)
     tax += slab_tax['slab5_tax']
     
     # 25% slab (20L-24L)
-    taxable_amount = min(400000, max(0, income - 2000000))
+    taxable_amount = min(400000, max(0, totalincome - 2000000))
     slab_tax['slab6_tax'] = round(taxable_amount * 0.25)
     tax += slab_tax['slab6_tax']
     
     # 30% slab (above 24L)
-    taxable_amount = max(0, income - 2400000)
+    taxable_amount = max(0, totalincome - 2400000)
     slab_tax['slab7_tax'] = round(taxable_amount * 0.30)
     tax += slab_tax['slab7_tax']
     
