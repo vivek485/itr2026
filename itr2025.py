@@ -121,7 +121,7 @@ if getdata:
     
     # Create a new dictionary with proper type conversion
     tax_data = pd.Series({
-        'tax': total_slab_tax,
+        'tax': tax,
         'educess': educess,
         'total_tax': total_tax,
         'payable_tax': payable_tax,
@@ -143,8 +143,8 @@ if getdata:
         tax_data['payable_tax'] = tax_data['total_tax'] - df['tax_paid'].iloc[0]
         tax_data['refundable_tax'] = abs(tax_data['payable_tax']) if tax_data['payable_tax'] < 0 else 0
     else:
-        tax_data['tax'] = tax
-        tax_data['educess'] = round(0.04 * tax)
+        tax_data['tax'] = total_slab_tax
+        tax_data['educess'] = round(0.04 * total_slab_tax)
         tax_data['total_tax'] = tax + tax_data['educess']
         tax_data['payable_tax'] = tax_data['total_tax'] - df['tax_paid'].iloc[0]
         tax_data['refundable_tax'] = abs(tax_data['payable_tax']) if tax_data['payable_tax'] < 0 else 0
