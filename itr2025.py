@@ -141,7 +141,7 @@ if getdata:
         tax_data['total_tax'] = 0
         tax_data['payable_tax'] = 0
         tax_data['refundable_tax'] = abs(tax_data['payable_tax']) if tax_data['payable_tax'] < 0 else 0
-    else
+    else :
         
         tax_data['tax'] = total_slab_tax
         tax_data['educess'] = round(0.04 * total_slab_tax)
