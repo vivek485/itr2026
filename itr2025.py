@@ -140,7 +140,7 @@ if getdata:
         tax_data['educess'] = 0
         tax_data['total_tax'] = 0
         tax_data['payable_tax'] = 0
-        tax_data['refundable_tax'] = abs(tax_data['payable_tax']) if tax_data['payable_tax'] < 0 else 0
+        tax_data['refundable_tax'] = abs(df['tax_paid'].iloc[0])
     else :
         
         tax_data['tax'] = total_slab_tax
