@@ -81,8 +81,9 @@ def calc_tax_new_regime(totalincome):
     taxable_amount = max(0, totalincome - 2400000)
     slab_tax['slab7_tax'] = round(taxable_amount * 0.30)
     tax += slab_tax['slab7_tax']
+    total_slab_tax = slab_tax['slab2_tax'] + slab_tax['slab3_tax'] + slab_tax['slab4_tax'] +slab_tax['slab5_tax'] + slab_tax['slab6_tax'] + slab_tax['slab7_tax']
     
-    return tax, slab_tax
+    return tax, slab_tax , total_slab_tax
 
 data = {
     'year': str(year), 
@@ -107,9 +108,9 @@ df = pd.DataFrame(data, index=[0])
 getdata = st.button('Calculate Tax')
 if getdata:
     # Calculate tax with slab breakdown
-    tax, slab_tax = calc_tax_new_regime(df['totalincome'].iloc[0])
+    tax, slab_tax , total_slab_tax = calc_tax_new_regime(df['totalincome'].iloc[0])
     
-    
+    st.write(total_slab_tax)
     # Add education cess (4%)
     educess = round(0.04 * tax)
     total_tax = tax + educess
@@ -120,7 +121,7 @@ if getdata:
     
     # Create a new dictionary with proper type conversion
     tax_data = pd.Series({
-        'tax': slab_tax,
+        'tax': tax,
         'educess': educess,
         'total_tax': total_tax,
         'payable_tax': payable_tax,
