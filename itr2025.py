@@ -110,7 +110,7 @@ if getdata:
     # Calculate tax with slab breakdown
     tax, slab_tax , total_slab_tax = calc_tax_new_regime(df['totalincome'].iloc[0])
     
-    st.write(total_slab_tax)
+    #st.write(total_slab_tax)
     # Add education cess (4%)
     educess = round(0.04 * tax)
     total_tax = tax + educess
@@ -121,7 +121,7 @@ if getdata:
     
     # Create a new dictionary with proper type conversion
     tax_data = pd.Series({
-        'tax': tax,
+        'tax': total_slab_tax,
         'educess': educess,
         'total_tax': total_tax,
         'payable_tax': payable_tax,
