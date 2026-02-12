@@ -112,8 +112,8 @@ if getdata:
     
     #st.write(total_slab_tax)
     # Add education cess (4%)
-    educess = round(0.04 * tax)
-    total_tax = tax + educess
+    educess = round(0.04 * total_slab_tax)
+    total_tax = total_slab_tax + educess
     
     # Calculate final payable/refundable tax
     payable_tax = round(total_tax - df['tax_paid'].iloc[0])
@@ -121,7 +121,7 @@ if getdata:
     
     # Create a new dictionary with proper type conversion
     tax_data = pd.Series({
-        'tax': tax,
+        'tax': total_slab_tax,
         'educess': educess,
         'total_tax': total_tax,
         'payable_tax': payable_tax,
@@ -145,7 +145,7 @@ if getdata:
     else:
         tax_data['tax'] = total_slab_tax
         tax_data['educess'] = round(0.04 * total_slab_tax)
-        tax_data['total_tax'] = tax + tax_data['educess']
+        tax_data['total_tax'] = total_slab_tax + tax_data['educess']
         tax_data['payable_tax'] = tax_data['total_tax'] - df['tax_paid'].iloc[0]
         tax_data['refundable_tax'] = abs(tax_data['payable_tax']) if tax_data['payable_tax'] < 0 else 0
     
