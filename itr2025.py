@@ -135,7 +135,7 @@ if getdata:
         'slab7_income': max(0, df['totalincome'].iloc[0] - 2400000)
     }, dtype='float64')
 
-    if totalincome < 120000 :
+    if float(totalincome) < 120000 :
         tax_data['tax'] = 0
         tax_data['educess'] = 0
         tax_data['total_tax'] = 0
