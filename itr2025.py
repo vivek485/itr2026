@@ -120,7 +120,7 @@ if getdata:
     
     # Create a new dictionary with proper type conversion
     tax_data = pd.Series({
-        'tax': tax,
+        'tax': slab_tax,
         'educess': educess,
         'total_tax': total_tax,
         'payable_tax': payable_tax,
