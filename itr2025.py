@@ -134,15 +134,8 @@ if getdata:
         'slab6_income': min(400000, max(0, df['totalincome'].iloc[0] - 2000000)),
         'slab7_income': max(0, df['totalincome'].iloc[0] - 2400000)
     }, dtype='float64')
-    m2 = tax_data['slab4_income']
+
     
-    if m2<tax:
-        tax_data['tax'] = m2
-        tax_data['educess'] = round(0.04 * m2)
-        tax_data['total_tax'] = m2 + tax_data['educess']
-        tax_data['payable_tax'] = tax_data['total_tax'] - df['tax_paid'].iloc[0]
-        tax_data['refundable_tax'] = abs(tax_data['payable_tax']) if tax_data['payable_tax'] < 0 else 0
-    else:
         tax_data['tax'] = total_slab_tax
         tax_data['educess'] = round(0.04 * total_slab_tax)
         tax_data['total_tax'] = total_slab_tax + tax_data['educess']
