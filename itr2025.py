@@ -136,11 +136,11 @@ if getdata:
     }, dtype='float64')
 
     
-        tax_data['tax'] = total_slab_tax
-        tax_data['educess'] = round(0.04 * total_slab_tax)
-        tax_data['total_tax'] = total_slab_tax + tax_data['educess']
-        tax_data['payable_tax'] = tax_data['total_tax'] - df['tax_paid'].iloc[0]
-        tax_data['refundable_tax'] = abs(tax_data['payable_tax']) if tax_data['payable_tax'] < 0 else 0
+    tax_data['tax'] = total_slab_tax
+    tax_data['educess'] = round(0.04 * total_slab_tax)
+    tax_data['total_tax'] = total_slab_tax + tax_data['educess']
+    tax_data['payable_tax'] = tax_data['total_tax'] - df['tax_paid'].iloc[0]
+    tax_data['refundable_tax'] = abs(tax_data['payable_tax']) if tax_data['payable_tax'] < 0 else 0
     
 
 
