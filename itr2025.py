@@ -6,14 +6,10 @@ import datetime
 
 from docxtpl import DocxTemplate
 
+
 st.set_page_config(layout="wide")
 st.title('ITR NEW TAX REGIME CALCULATION 2026-27')
-import numpy as np
-import streamlit as st
-import io
-import datetime
 
-from docxtpl import DocxTemplate
 
 st.set_page_config(layout="wide")
 st.title('ITR NEW TAX REGIME CALCULATION 2026-27')
