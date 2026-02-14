@@ -1,9 +1,10 @@
-from docxtpl import DocxTemplate
 import pandas as pd
 import numpy as np
 import streamlit as st
 import io
 import datetime
+
+from docxtpl import DocxTemplate
 
 st.set_page_config(layout="wide")
 st.title('ITR NEW TAX REGIME CALCULATION 2026-27')
@@ -80,8 +81,9 @@ def calc_tax_new_regime(totalincome):
     taxable_amount = max(0, totalincome - 2400000)
     slab_tax['slab7_tax'] = round(taxable_amount * 0.30)
     tax += slab_tax['slab7_tax']
+    total_slab_tax = slab_tax['slab2_tax'] + slab_tax['slab3_tax'] + slab_tax['slab4_tax'] +slab_tax['slab5_tax'] + slab_tax['slab6_tax'] + slab_tax['slab7_tax']
     
-    return tax, slab_tax
+    return tax, slab_tax , total_slab_tax
 
 data = {
     'year': str(year), 
@@ -106,12 +108,12 @@ df = pd.DataFrame(data, index=[0])
 getdata = st.button('Calculate Tax')
 if getdata:
     # Calculate tax with slab breakdown
-    tax, slab_tax = calc_tax_new_regime(df['totalincome'].iloc[0])
+    tax, slab_tax , total_slab_tax = calc_tax_new_regime(df['totalincome'].iloc[0])
     
-    
+    #st.write(total_slab_tax)
     # Add education cess (4%)
-    educess = round(0.04 * tax)
-    total_tax = tax + educess
+    educess = round(0.04 * total_slab_tax)
+    total_tax = total_slab_tax + educess
     
     # Calculate final payable/refundable tax
     payable_tax = round(total_tax - df['tax_paid'].iloc[0])
@@ -119,7 +121,7 @@ if getdata:
     
     # Create a new dictionary with proper type conversion
     tax_data = pd.Series({
-        'tax': tax,
+        'tax': total_slab_tax,
         'educess': educess,
         'total_tax': total_tax,
         'payable_tax': payable_tax,
@@ -132,18 +134,18 @@ if getdata:
         'slab6_income': min(400000, max(0, df['totalincome'].iloc[0] - 2000000)),
         'slab7_income': max(0, df['totalincome'].iloc[0] - 2400000)
     }, dtype='float64')
-    m2 = tax_data['slab4_income']
-    
-    if m2<tax:
-        tax_data['tax'] = m2
-        tax_data['educess'] = round(0.04 * m2)
-        tax_data['total_tax'] = m2 + tax_data['educess']
-        tax_data['payable_tax'] = tax_data['total_tax'] - df['tax_paid'].iloc[0]
-        tax_data['refundable_tax'] = abs(tax_data['payable_tax']) if tax_data['payable_tax'] < 0 else 0
-    else:
-        tax_data['tax'] = tax
-        tax_data['educess'] = round(0.04 * tax)
-        tax_data['total_tax'] = tax + tax_data['educess']
+
+    if float(totalincome) < 1200000 :
+        tax_data['tax'] = 0
+        tax_data['educess'] = 0
+        tax_data['total_tax'] = 0
+        tax_data['payable_tax'] = 0
+        tax_data['refundable_tax'] = abs(df['tax_paid'].iloc[0])
+    else :
+        
+        tax_data['tax'] = total_slab_tax
+        tax_data['educess'] = round(0.04 * total_slab_tax)
+        tax_data['total_tax'] = total_slab_tax + tax_data['educess']
         tax_data['payable_tax'] = tax_data['total_tax'] - df['tax_paid'].iloc[0]
         tax_data['refundable_tax'] = abs(tax_data['payable_tax']) if tax_data['payable_tax'] < 0 else 0
     
